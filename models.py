@@ -6,6 +6,8 @@ HEIGHT = 40
 
 MARGIN = 10
 
+MAX_TIME = 60.0
+
 STATE_GAME = 0
 STATE_GAMEOVER = 1
 
@@ -15,6 +17,7 @@ class Grid():
         self.grid = []
         self.score = 0;
         self.total_time = 0
+        self.count_time = 0
 
         for row in range(10):
             # Add an empty array that will hold each cell
@@ -28,18 +31,23 @@ class Grid():
     def assignBomb(self, grid):
         self.grid = grid
 
-        for bomb in range(5):
+        for bomb in range(10):
             self.row = randint(0, 9)
             self.column = randint(0, 9)
             self.grid[self.row][self.column] = 2
 
-    def animate(self, delta):
-        self.total_time += delta
-        self.second = self.total_time % 60
+    def animate(self, delta, total_time):
+        self.total_time = total_time
+        self.count_time += delta
 
-        if(self.total_time > 3):
-            self.total_time = 0
-            self.assignBomb(self.grid)
+        if self.total_time > MAX_TIME / 2:
+            if(self.count_time > 3):
+                self.count_time = 0
+                self.assignBomb(self.grid)
+        else:
+            if(self.count_time > 2):
+                self.count_time = 0
+                self.assignBomb(self.grid)
 
     def on_draw(self):
         # Draw the grid
@@ -81,6 +89,7 @@ class Grid():
                 print(self.score)
 
         else:
+            self.score -= 1
             print("You click not correct")
 
         print("Click coordinates: ({}, {}). Grid coordinates: ({}, {})"
@@ -95,7 +104,7 @@ class World:
 
         self.grid = Grid(self)
         self.score = self.grid.getScore()
-        self.total_time = 60.0
+        self.total_time = MAX_TIME
         self.second = 0;
 
     def printScore(self):
@@ -103,7 +112,7 @@ class World:
 
     def animate(self, delta):
         self.total_time -= delta
-        self.grid.animate(delta)
+        self.grid.animate(delta, self.total_time)
         self.score = self.grid.getScore()
         print(self.score)
 
@@ -114,3 +123,9 @@ class World:
 
     def on_mouse_press(self, x, y, button, modifiers):
         self.grid.on_mouse_press(x, y, button, modifiers)
+
+    def getTotalTime(self):
+        return self.total_time
+
+    def getScore(self):
+        return self.score
