@@ -1,6 +1,6 @@
 import arcade
 
-from models import World, Player, Grid
+from models import World, Grid
 
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720

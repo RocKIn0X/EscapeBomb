@@ -6,16 +6,8 @@ HEIGHT = 40
 
 MARGIN = 10
 
-class Player:
-    def __init__(self, world, grid):
-        self.world = world
-        self.grid = grid
-        self.playerPos = grid.grid
-
-    def animate(self, delta):
-        for i in range(10):
-            for j in range(10):
-                print(self.playerPos[i][j])
+STATE_GAME = 0
+STATE_GAMEOVER = 1
 
 class Grid():
     def __init__(self, world):
@@ -103,27 +95,22 @@ class World:
 
         self.grid = Grid(self)
         self.score = self.grid.getScore()
-        self.total_time = 0.0
+        self.total_time = 60.0
         self.second = 0;
-        self.player = Player(self, self.grid)
 
     def printScore(self):
         print(self.score)
 
     def animate(self, delta):
+        self.total_time -= delta
         self.grid.animate(delta)
         self.score = self.grid.getScore()
         print(self.score)
 
     def draw(self):
         self.grid.on_draw()
-
-    def on_key_press(self, key, key_modifiers):
-        if key == arcade.key.W:
-            print("hello")
-
-        if key == arcade.key.D:
-            print("world")
+        arcade.draw_text("score: " + str(self.score), 1050, 680, arcade.color.BLACK, 20)
+        arcade.draw_text("Time: " + str(self.total_time), 1050, 600, arcade.color.BLACK, 20)
 
     def on_mouse_press(self, x, y, button, modifiers):
         self.grid.on_mouse_press(x, y, button, modifiers)
