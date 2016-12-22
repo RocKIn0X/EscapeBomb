@@ -16,6 +16,9 @@ class EscapeBombWindow(arcade.Window):
         self.world = World(width, height)
         self.grid = Grid(self.world)
 
+    def animate(self, delta_time):
+        self.world.animate(delta_time)
+
     def on_draw(self):
         arcade.start_render()
 
