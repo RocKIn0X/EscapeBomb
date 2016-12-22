@@ -1,6 +1,6 @@
 import arcade
 
-from models import Player
+from models import World, Player
 
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
@@ -11,17 +11,14 @@ class EscapeBombWindow(arcade.Window):
     def __init__(self, width, height):
         super().__init__(width, height)
 
-        arcade.set_background_color(arcade.color.BLACK)
+        arcade.set_background_color(arcade.color.GRAY)
 
-        self.player = Player(100, 100)
         self.player_sprite = arcade.Sprite('images/boy.png', SPRITE_SCALING)
-
+        self.world = World(width, height)
 
     def animate(self, delta):
-        player = self.player
-
-        player.animate(delta)
-        self.player_sprite.set_position(player.x, player.y)
+        self.world.animate(delta)
+        self.player_sprite.set_position(self.world.player.x, self.world.player.y)
 
     def on_draw(self):
         arcade.start_render()
