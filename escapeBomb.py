@@ -24,6 +24,10 @@ class EscapeBombWindow(arcade.Window):
     def on_key_press(self, key, key_modifiers):
         self.world.on_key_press(key, key_modifiers)
 
+    def on_mouse_press(self, x, y, button, modifiers):
+        self.world.on_mouse_press(x, y, button, modifiers)
+
+
 if __name__ == '__main__':
     window = EscapeBombWindow(SCREEN_WIDTH, SCREEN_HEIGHT)
     arcade.run()
