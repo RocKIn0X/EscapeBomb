@@ -43,7 +43,7 @@ class EscapeBombWindow(arcade.Window):
             self.world.draw()
             if self.total_time <= 0:
                 self.state = STATE_GAMEOVER
-            if self.score >= 10:
+            if self.score >= 100:
                 self.total_time = 0
                 self.state = STATE_WINNING
         elif self.state == STATE_WINNING:
@@ -54,8 +54,9 @@ class EscapeBombWindow(arcade.Window):
 
         else:
             arcade.set_background_color(arcade.color.YELLOW)
+            arcade.draw_text("GAME OVER T^T" , 400, 460, arcade.color.BLUE, 40)
             arcade.draw_text("Your score: " + str(self.score), 500, 360, arcade.color.BLACK, 40)
-            arcade.draw_text("Click for restart game", 560, 300, arcade.color.BLACK, 20)
+            arcade.draw_text("Click for restart game", 500, 300, arcade.color.BLACK, 20)
 
     def on_mouse_press(self, x, y, button, modifiers):
         if self.state == STATE_GAME:
