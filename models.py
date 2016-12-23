@@ -87,7 +87,7 @@ class Grid():
                 arcade.play_sound(self.clickPoint_sound)
                 #print(self.score)
 
-            if(self.grid[row][column] == 0):
+            else:
                 self.score -= 1
                 arcade.play_sound(self.clickFail_sound)
                 #print(self.score)
