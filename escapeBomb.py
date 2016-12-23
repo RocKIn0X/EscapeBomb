@@ -9,6 +9,7 @@ SPRITE_SCALING = 0.25
 
 STATE_GAME = "ON GAME"
 STATE_GAMEOVER = "GAME OVER"
+#STATE_WINNING = "WIN"
 
 class EscapeBombWindow(arcade.Window):
     def __init__(self, width, height):
@@ -23,6 +24,11 @@ class EscapeBombWindow(arcade.Window):
         self.world = World(width, height)
         self.grid = Grid(self.world)
         self.total_time = 1
+        self.score = 0
+        self.bg_sound = arcade.load_sound("sounds/bg.ogg")
+        #self.final_sound = arcade.load_sound("sounds/FLTFINAL.ogg")
+
+        arcade.play_sound(self.bg_sound)
 
     def animate(self, delta_time):
         self.world.animate(delta_time)
@@ -35,6 +41,7 @@ class EscapeBombWindow(arcade.Window):
             self.world.draw()
             if self.total_time <= 0:
                 self.state = STATE_GAMEOVER
+
         else:
             arcade.set_background_color(arcade.color.YELLOW)
             self.score = self.world.getScore()

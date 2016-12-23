@@ -72,6 +72,8 @@ class Grid():
         """
         Called when the user presses a mouse button.
         """
+        self.clickPoint_sound = arcade.load_sound("sounds/beep.ogg")
+        self.clickFail_sound = arcade.load_sound("sounds/LOWSPIN.ogg")
 
         # Change the x/y screen coordinates to grid coordinates
         column = (x - 385) // (WIDTH + MARGIN)
@@ -82,14 +84,17 @@ class Grid():
             if(self.grid[row][column] == 2):
                 self.grid[row][column] = 1
                 self.score += 1
-                print(self.score)
+                arcade.play_sound(self.clickPoint_sound)
+                #print(self.score)
 
             if(self.grid[row][column] == 0):
                 self.score -= 1
-                print(self.score)
+                arcade.play_sound(self.clickFail_sound)
+                #print(self.score)
 
         else:
             self.score -= 1
+            arcade.play_sound(self.clickFail_sound)
             print("You click not correct")
 
         print("Click coordinates: ({}, {}). Grid coordinates: ({}, {})"
@@ -114,7 +119,7 @@ class World:
         self.total_time -= delta
         self.grid.animate(delta, self.total_time)
         self.score = self.grid.getScore()
-        print(self.score)
+        #print(self.score)
 
     def draw(self):
         self.grid.on_draw()
