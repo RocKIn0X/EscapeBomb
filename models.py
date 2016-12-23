@@ -109,7 +109,7 @@ class World:
 
         self.grid = Grid(self)
         self.score = self.grid.getScore()
-        self.total_time = 10
+        self.total_time = MAX_TIME
         self.second = 0;
 
     def printScore(self):
